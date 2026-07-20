@@ -361,9 +361,11 @@ const Header = () => {
     );
   };
 
-  useEffect(() => {
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (location.pathname !== prevPath) {
+    setPrevPath(location.pathname);
     setIsDrawerOpen(false);
-  }, [location.pathname]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = isDrawerOpen ? "hidden" : "";

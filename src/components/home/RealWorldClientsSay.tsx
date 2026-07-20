@@ -72,7 +72,7 @@ const RealWorldClientsSay: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (isPaused || (globalThis as any).__snapshot) return;
+    if (isPaused || (globalThis as { __snapshot?: boolean }).__snapshot) return;
     const intervalRef = setInterval(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
     }, 4000);

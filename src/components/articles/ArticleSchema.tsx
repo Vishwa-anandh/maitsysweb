@@ -92,7 +92,7 @@ export const ArticleSchema: React.FC<ArticleSchemaProps> = (props) => {
     const pubName = publisherName || siteName || "Maitsys";
     const authorSchema = buildAuthorSchema(author, siteName);
 
-    const schema: any = {
+    const schema: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: headline.trim(),
@@ -113,7 +113,7 @@ export const ArticleSchema: React.FC<ArticleSchemaProps> = (props) => {
     };
 
     if (publisherLogo) {
-      schema.publisher.logo = {
+      (schema.publisher as any).logo = {
         "@type": "ImageObject",
         url: toAbs(publisherLogo),
       };

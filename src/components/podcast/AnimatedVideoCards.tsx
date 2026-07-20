@@ -25,7 +25,7 @@ const AnimatedVideoCards: React.FC = () => {
 
   // Auto-play the active video after a delay
   useEffect(() => {
-    if (isVideoPlaying && !(globalThis as any).__snapshot) {
+    if (isVideoPlaying && !(globalThis as { __snapshot?: boolean }).__snapshot) {
       const timer = setTimeout(() => {}, 2000);
       return () => clearTimeout(timer);
     }
@@ -34,7 +34,7 @@ const AnimatedVideoCards: React.FC = () => {
   // Auto-rotate marquee selection
   useEffect(() => {
     // Disable interval during prerendering to prevent react-snap from hanging
-    if (hoveredCard !== null || (globalThis as any).__snapshot) return;
+    if (hoveredCard !== null || (globalThis as { __snapshot?: boolean }).__snapshot) return;
 
     const interval = setInterval(() => {
       if (!isVideoPlaying) {
@@ -123,7 +123,7 @@ const AnimatedVideoCards: React.FC = () => {
                         animate={{ scale: hoveredCard === index ? 1.1 : 1 }}
                         transition={{ duration: 0.3 }}
                         onError={(e) => {
-                          if ((globalThis as any).__snapshot) return;
+                          if ((globalThis as { __snapshot?: boolean }).__snapshot) return;
                           e.currentTarget.src = `https://img.youtube.com/vi/${
                             video.youtubeUrl.split("/embed/")[1].split("?")[0]
                           }/maxresdefault.jpg`;
@@ -199,7 +199,7 @@ const AnimatedVideoCards: React.FC = () => {
                         animate={{ scale: hoveredCard === index ? 1.1 : 1 }}
                         transition={{ duration: 0.3 }}
                         onError={(e) => {
-                          if ((globalThis as any).__snapshot) return;
+                          if ((globalThis as { __snapshot?: boolean }).__snapshot) return;
                           e.currentTarget.src = `https://img.youtube.com/vi/${
                             video.youtubeUrl.split("/embed/")[1].split("?")[0]
                           }/maxresdefault.jpg`;
@@ -326,7 +326,7 @@ const AnimatedVideoCards: React.FC = () => {
 
                   {/* Video player */}
                   <div className="w-full h-full">
-                    {(globalThis as any).__snapshot ? (
+                    {(globalThis as { __snapshot?: boolean }).__snapshot ? (
                       <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                         Video placeholder for build
                       </div>

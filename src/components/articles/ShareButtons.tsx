@@ -1,27 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 
 type Props = {
   title?: string;
 };
 
 const ShareButtons: React.FC<Props> = ({ title }) => {
-  const [url, setUrl] = useState("");
-  const [pageTitle, setPageTitle] = useState(title || "");
-
-  useEffect(() => {
-    if (globalThis.window !== undefined) {
-      setUrl(globalThis.location.href);
-      if (!title) setPageTitle(document.title);
-    }
-  }, [title]);
-
-  const openShare = (shareUrl: string) => {
-    window.open(shareUrl, "_blank", "noopener,noreferrer,width=600,height=500");
-  };
-
-  const links = useMemo(() => {
-    const encodedUrl = encodeURIComponent(url);
-    const encodedText = encodeURIComponent(pageTitle || "");
+  const getLinks = () => {
+    const currentUrl = window.location.href;
+    const currentTitle = title || document.title;
+    const encodedUrl = encodeURIComponent(currentUrl);
+    const encodedText = encodeURIComponent(currentTitle);
 
     return {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
@@ -29,17 +17,23 @@ const ShareButtons: React.FC<Props> = ({ title }) => {
       whatsapp: `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`,
       telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
       twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
-
       email: `mailto:?subject=${encodedText}&body=${encodedText}%0A${encodedUrl}`,
     };
-  }, [url, pageTitle]);
+  };
+
+  const openShare = (network: keyof ReturnType<typeof getLinks>) => {
+    const links = getLinks();
+    window.open(links[network], "_blank", "noopener,noreferrer,width=600,height=500");
+  };
 
   const nativeShare = async () => {
+    const currentUrl = window.location.href;
+    const currentTitle = title || document.title;
     try {
       if (navigator.share) {
-        await navigator.share({ title: pageTitle, url });
+        await navigator.share({ title: currentTitle, url: currentUrl });
       } else {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(currentUrl);
         alert("Link copied to clipboard!");
       }
     } catch {
@@ -47,15 +41,13 @@ const ShareButtons: React.FC<Props> = ({ title }) => {
     }
   };
 
-  if (!url) return null;
-
   return (
     <div className="flex items-center gap-3">
       <span className="text-sm text-gray-600">Share:</span>
 
       {/* Facebook */}
       <button
-        onClick={() => openShare(links.facebook)}
+        onClick={() => openShare("facebook")}
         className="h-8 w-8 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-90 transition"
         aria-label="Share on Facebook"
       >
@@ -78,7 +70,7 @@ const ShareButtons: React.FC<Props> = ({ title }) => {
 
       {/* LinkedIn */}
       <button
-        onClick={() => openShare(links.linkedin)}
+        onClick={() => openShare("linkedin")}
         className="h-8 w-8 rounded-full bg-[#0A66C2] text-white flex items-center justify-center hover:opacity-90 transition"
         aria-label="Share on LinkedIn"
       >
@@ -102,7 +94,7 @@ const ShareButtons: React.FC<Props> = ({ title }) => {
 
       {/* Email */}
       <button
-        onClick={() => openShare(links.twitter)}
+        onClick={() => openShare("twitter")}
         className="h-8 w-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:opacity-90 transition"
         aria-label="Share on Twitter"
       >

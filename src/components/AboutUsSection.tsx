@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import backgroundImage from "../assets/image/animatebg.avif"; // put your uploaded image in src/assets
 
 const AboutUs: React.FC = () => {
+  const [particles] = useState(() => {
+    return Array.from({ length: 20 }).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 3 + Math.random() * 4,
+    }));
+  });
+
   return (
     <section
       style={{
@@ -24,15 +33,15 @@ const AboutUs: React.FC = () => {
         <div className="absolute bottom-1/4 -right-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
         {/* Floating Particles */}
-        {[Array.from({ length: 20 })].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i + "index"}
             className="absolute w-1 h-1 bg-white/10 rounded-full animate-float"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              animationDelay: `${particle.delay}s`,
+              animationDuration: `${particle.duration}s`,
             }}
           />
         ))}

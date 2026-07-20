@@ -30,7 +30,7 @@ const PodcastList: React.FC = () => {
                     isEven ? "border-l-2 " : "border-r-2 "
                   }`}
                 >
-                  {(globalThis as any).__snapshot ? (
+                  {(globalThis as { __snapshot?: boolean }).__snapshot ? (
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                       Video placeholder for build
                     </div>

@@ -50,7 +50,7 @@ export default function Slider() {
   const prev = () => setCurrent((p) => (p - 1 + slides.length) % slides.length);
   // AUTO PLAY
   useEffect(() => {
-    if ((globalThis as any).__snapshot) return;
+    if ((globalThis as { __snapshot?: boolean }).__snapshot) return;
     const auto = setInterval(() => {
       next();
     }, 3000);

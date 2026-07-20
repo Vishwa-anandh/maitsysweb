@@ -135,7 +135,7 @@ const SEO: React.FC<SEOProps> = ({
   canonicalOrigin,
   omitCanonical = false,
 }) => {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
 
   const kw = useMemo(() => normalizeKeywords(keywords), [keywords]);
   const absImage = useMemo(
@@ -188,7 +188,6 @@ const SEO: React.FC<SEOProps> = ({
     canonicalOrigin,
     url,
     pathname,
-    search,
     canonicalIgnoreQuery,
     canonicalRemoveTrailingSlash,
     preventWrongHomeCanonical,

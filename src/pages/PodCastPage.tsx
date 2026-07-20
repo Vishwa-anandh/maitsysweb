@@ -33,7 +33,7 @@ const PodCastPage: React.FC = () => {
         }}
       />
       <main id="main-content">
-        {(globalThis as any).__snapshot ? (
+        {(globalThis as { __snapshot?: boolean }).__snapshot ? (
           <div className="py-20 text-center text-gray-400">
             Podcast content is loaded on the client side.
           </div>
