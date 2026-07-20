@@ -27,22 +27,27 @@ phases:
       # Show environment variable from CodeBuild
       - echo "SITE URL = $VITE_SITE_URL"
 
-      # Set Puppeteer to use system Chrome (for react-snap)
-      #- export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome || echo "")
-
       # Optional TypeScript validation
       - npx tsc --noEmit --skipLibCheck 2>/dev/null || true
 
       # Build Vite project
       - npx vite build
 
-      # Run react-snap prerender
-      #- echo "Running react-snap..."
-      #- npx react-snap
+      # Prerender all routes with react-snap using the system Chrome.
+      # REQUIRED for SEO/AI crawlers - without this the deploy is an empty SPA shell.
+      - export PUPPETEER_EXECUTABLE_PATH=$(command -v google-chrome-stable || command -v google-chrome)
+      - test -n "$PUPPETEER_EXECUTABLE_PATH" || { echo "ERROR - Chrome not found, prerender cannot run"; exit 1; }
+      - echo "Running react-snap prerender with $PUPPETEER_EXECUTABLE_PATH"
+      - node scripts/prerender.cjs
+
+      # Guard: fail the build if prerendered content is missing (prevents silent SPA-only deploys)
+      - test -f dist/blog/sap-s4hana-migration/index.html
+      - grep -q "application/ld+json" dist/blog/sap-s4hana-migration/index.html
+      - echo "Prerender verified - static HTML with structured data present"
 
       # Debug: list generated pages
       - echo "Generated files:"
-      - ls -R dist
+      - ls dist
 
       - echo "Build completed successfully"
 
