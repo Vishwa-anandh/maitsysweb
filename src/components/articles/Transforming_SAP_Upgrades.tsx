@@ -8,6 +8,35 @@ import RelatedArticles from "./RelatedArticles";
 import BlogMeta from "./BlogMeta";
 import Seo from "../SEO";
 import { ArticleSchema } from "./ArticleSchema";
+import KeyTakeaways from "./KeyTakeaways";
+import ArticleReferences from "./ArticleReferences";
+import BreadcrumbSchema from "../BreadcrumbSchema";
+
+const sapUpgradeFactoryTakeaways = [
+  "The factory approach turns SAP upgrades into standardized, automated, and repeatable processes instead of one-time projects.",
+  "Organizations adopting the factory model reduce upgrade timelines by up to 60–70%, completing upgrades in weeks instead of months.",
+  "SAP ECC Compatibility Pack support ends in May 2026, making upgrade planning urgent for compliance, security, and innovation.",
+  "The model covers every SAP upgrade type: ECC Support Packs, Enhancement Packages (EHP), S/4HANA release upgrades, and Feature Pack Stacks (FPS).",
+  "Its core principles are standardization, automation, specialization, and continuous improvement.",
+];
+
+const sapUpgradeFactoryReferences = [
+  {
+    title: "SAP Maintenance Strategy",
+    url: "https://support.sap.com/en/release-upgrade-maintenance/maintenance-information/maintenance-strategy.html",
+    source: "SAP Support Portal",
+  },
+  {
+    title: "SAP Readiness Check",
+    url: "https://support.sap.com/en/tools/upgrade-transformation-tools/readiness-check.html",
+    source: "SAP Support Portal",
+  },
+  {
+    title: "SAP S/4HANA",
+    url: "https://www.sap.com/products/erp/s4hana.html",
+    source: "SAP",
+  },
+];
 
 const Transforming_SAP_Upgrades: React.FC = () => {
   return (
@@ -44,7 +73,7 @@ const Transforming_SAP_Upgrades: React.FC = () => {
         url="/blog/sap-upgrade-factory-approach-ecc-ehp-s4hana"
         image="/assets/articles/articles_image10.webp"
         datePublished="2026-01-01T08:00:00.000Z"
-        dateModified="2026-01-01T08:00:00.000Z"
+        dateModified="2026-07-20T12:00:00.000Z"
         siteName="Maitsys"
         publisherName="Maitsys"
         publisherLogo="/logo.png"
@@ -63,6 +92,16 @@ const Transforming_SAP_Upgrades: React.FC = () => {
           "SAP transformation methodology",
         ]}
         articleSection="SAP"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          {
+            name: "SAP Upgrade Factory Approach",
+            path: "/blog/sap-upgrade-factory-approach-ecc-ehp-s4hana",
+          },
+        ]}
       />
       <div className="mx-auto min-h-screen bg-white max-w-8xl">
         <main className="px-4 pt-8 pb-6 mx-auto w-full max-w-3xl sm:px-6">
@@ -136,6 +175,10 @@ const Transforming_SAP_Upgrades: React.FC = () => {
                 className="object-cover w-full h-auto"
               />
             </figure>
+            <KeyTakeaways
+              points={sapUpgradeFactoryTakeaways}
+              className="not-prose mt-7"
+            />
             {/* Content */}
             <section className="space-y-4">
               <BlockUlDesign headingTag="h2" title="Introduction" />
@@ -259,6 +302,7 @@ const Transforming_SAP_Upgrades: React.FC = () => {
                 description2="By adopting a factory-driven upgrade model, organizations can transform SAP upgrades from disruptive projects into efficient, predictable processes—ensuring long-term success in an increasingly competitive digital landscape."
               />
               <hr />
+              <ArticleReferences references={sapUpgradeFactoryReferences} />
             </section>
             <div className="p-8 mt-10 text-white rounded-2xl bg-zinc-900">
               <h2 className="mb-4 text-2xl font-bold text-white">

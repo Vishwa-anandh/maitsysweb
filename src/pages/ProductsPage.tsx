@@ -27,7 +27,7 @@ const ProductsPage: React.FC = () => {
           url: "/products",
           siteName: "Maitsys",
           type: "website",
-          image: "/logo.png",
+          image: "/maitsys_company.jpg",
           imageAlt:
             "Maitsys SAP Integration, Security & Cloud Cost Optimization Products",
           preloadImage: false, // only preload if you have a big hero banner image
