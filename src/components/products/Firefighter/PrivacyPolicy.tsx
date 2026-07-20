@@ -21,7 +21,11 @@ import Seo from "../../SEO";
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <Seo url="/products/firefighter/privacy-policy" />
+      <Seo
+        title="Privacy Policy | Firefighter | Maitsys"
+        description="Privacy policy for the Maitsys Firefighter SAP emergency access management product, covering data collection, usage, and protection practices."
+        url="/products/firefighter/privacy-policy"
+      />
       <div className="min-h-screen bg-white">
       {/* Content */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">

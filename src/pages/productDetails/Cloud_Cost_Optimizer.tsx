@@ -1927,7 +1927,7 @@ const CloudCostOptimizer: React.FC = () => {
                         className={`group flex items-start gap-4 bg-gradient-to-br ${p.tone.split(" ").slice(0, 3).join(" ")} border rounded-2xl p-4 hover:-translate-y-0.5 transition-transform duration-300`}
                       >
                         <div
-                          className={`w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 ${p.tone.split(" ").at(-1)}`}
+                          className={`w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 ${p.tone.split(" ").slice(-1)[0]}`}
                         >
                           <Icon className="w-4 h-4" strokeWidth={2} />
                         </div>

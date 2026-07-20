@@ -21,7 +21,11 @@ import Seo from "../../SEO";
 export default function TermsAndConditions() {
   return (
     <>
-      <Seo url="/products/firefighter/terms-and-conditions" />
+      <Seo
+        title="Terms & Conditions | Firefighter | Maitsys"
+        description="Terms and conditions for using the Maitsys Firefighter SAP emergency access management product."
+        url="/products/firefighter/terms-and-conditions"
+      />
       <div className="min-h-screen bg-white">
       {/* Content */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">

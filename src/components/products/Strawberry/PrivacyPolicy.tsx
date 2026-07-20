@@ -3,7 +3,11 @@ import Seo from "../../SEO";
 const PrivacyPolicy: React.FC = () => {
   return (
     <>
-      <Seo url="/products/sap-idoc-monitoring/privacy-policy" />
+      <Seo
+        title="Privacy Policy | SAP IDoc Monitoring | Maitsys"
+        description="Privacy policy for the Maitsys SAP IDoc Monitoring product, covering data collection, usage, and protection practices."
+        url="/products/sap-idoc-monitoring/privacy-policy"
+      />
       <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-bold text-slate-900">Privacy Policy</h1>
