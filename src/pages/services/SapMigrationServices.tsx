@@ -378,6 +378,64 @@ const SapMigrationServices: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Comparative Table: SAP ECC vs S/4HANA */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="pt-4 pb-8 bg-white md:pt-6 md:pb-10"
+        >
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mx-auto mb-10 max-w-3xl text-center md:mb-10">
+              <h2 className="mb-6 text-3xl font-bold md:text-5xl font-display text-slate-900">
+                <span className="block leading-[1.2]">Comparing</span>
+                <span className="text-red-600 leading-[1.2]">
+                  SAP ECC vs SAP S/4HANA
+                </span>
+              </h2>
+              <p className="text-lg text-gray-600">
+                Understanding the key differences to drive your migration strategy.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-xl shadow-lg border border-gray-100">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <caption className="sr-only">Comparison of SAP ECC and SAP S/4HANA features</caption>
+                <thead className="bg-slate-50 border-b border-gray-200">
+                  <tr>
+                    <th className="p-4 font-semibold text-gray-900 w-1/3">Feature</th>
+                    <th className="p-4 font-semibold text-gray-900 w-1/3 border-l border-gray-200">SAP ECC</th>
+                    <th className="p-4 font-semibold text-gray-900 w-1/3 border-l border-gray-200 bg-red-50 text-red-700">SAP S/4HANA</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 bg-white">
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-4 text-gray-700 font-medium">Database Compatibility</td>
+                    <td className="p-4 text-gray-600 border-l border-gray-100">AnyDB (Oracle, SQL Server, etc.)</td>
+                    <td className="p-4 text-gray-900 border-l border-gray-100 font-medium bg-red-50/30">SAP HANA (In-memory only)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-4 text-gray-700 font-medium">Data Processing</td>
+                    <td className="p-4 text-gray-600 border-l border-gray-100">Slower batch processing</td>
+                    <td className="p-4 text-gray-900 border-l border-gray-100 font-medium bg-red-50/30">Real-time analytics & processing</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-4 text-gray-700 font-medium">User Interface</td>
+                    <td className="p-4 text-gray-600 border-l border-gray-100">Traditional SAP GUI</td>
+                    <td className="p-4 text-gray-900 border-l border-gray-100 font-medium bg-red-50/30">Modern SAP Fiori UX</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-4 text-gray-700 font-medium">Data Footprint</td>
+                    <td className="p-4 text-gray-600 border-l border-gray-100">Large data footprint with aggregates</td>
+                    <td className="p-4 text-gray-900 border-l border-gray-100 font-medium bg-red-50/30">Reduced data footprint (no aggregates)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Why Choose Us */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}

@@ -125,6 +125,29 @@ const AwsManagedServices: React.FC = () => {
           url: "https://www.maitsys.com/aws-managed-services",
         }}
       />
+      <JsonLd
+        schema={{
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "What is included in AWS Managed Services?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Our AWS Managed Services include 24/7 monitoring, cost optimization, security compliance, infrastructure management, and proactive support tailored to your workloads.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "How does Maitsys help reduce AWS costs?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "We utilize proven optimization strategies including rightsizing resources, purchasing Savings Plans, identifying underutilized assets, and continuous architectural reviews.",
+              },
+            },
+          ],
+        }}
+      />
       <BreadcrumbSchema
         items={[
           { name: "Home", path: "/" },
@@ -211,7 +234,16 @@ const AwsManagedServices: React.FC = () => {
               >
                 Maitsys helps organizations manage and optimize their AWS
                 environments with 24/7 monitoring, expert-led automation, and
-                enterprise-grade technical support.
+                enterprise-grade technical support, aligning with the{" "}
+                <a
+                  href="https://aws.amazon.com/architecture/well-architected/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-red-600 font-semibold hover:underline"
+                >
+                  AWS Well-Architected Framework
+                </a>
+                .
               </motion.p>
 
               <motion.div
@@ -631,6 +663,35 @@ const AwsManagedServices: React.FC = () => {
                     </a>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+        {/* FAQ Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="pt-8 pb-12 bg-slate-50 border-t border-gray-100"
+        >
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="mx-auto mb-10 max-w-3xl text-center md:mb-12">
+              <h2 className="mb-4 text-3xl font-bold md:text-5xl font-display text-slate-900">
+                Frequently Asked <span className="text-red-600">Questions</span>
+              </h2>
+              <p className="text-lg text-gray-600">
+                Common questions about our AWS Managed Services.
+              </p>
+            </div>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">What is included in AWS Managed Services?</h3>
+                <p className="text-gray-600">Our AWS Managed Services include 24/7 monitoring, cost optimization, security compliance, infrastructure management, and proactive support tailored to your workloads.</p>
+              </div>
+              <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">How does Maitsys help reduce AWS costs?</h3>
+                <p className="text-gray-600">We utilize proven optimization strategies including rightsizing resources, purchasing Savings Plans, identifying underutilized assets, and continuous architectural reviews.</p>
               </div>
             </div>
           </div>
