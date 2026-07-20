@@ -1,0 +1,62 @@
+version: 0.2
+
+env:
+  variables:
+    NODE_ENV: "development"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+
+      # Install Google Chrome for react-snap (Amazon Linux 2023 compatible)
+      - echo "Installing Google Chrome..."
+      - dnf install -y wget
+      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+      - dnf install -y ./google-chrome-stable_current_x86_64.rpm || true
+
+      # Install node dependencies
+      - npm install
+
+  build:
+    commands:
+      - echo "Building app..."
+
+      # Show environment variable from CodeBuild
+      - echo "SITE URL = $VITE_SITE_URL"
+
+      # Set Puppeteer to use system Chrome (for react-snap)
+      #- export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome || echo "")
+
+      # Optional TypeScript validation
+      - npx tsc --noEmit --skipLibCheck 2>/dev/null || true
+
+      # Build Vite project
+      - npx vite build
+
+      # Run react-snap prerender
+      #- echo "Running react-snap..."
+      #- npx react-snap
+
+      # Debug: list generated pages
+      - echo "Generated files:"
+      - ls -R dist
+
+      - echo "Build completed successfully"
+
+  post_build:
+    commands:
+      - echo "Build stage finished on $(date)"
+
+artifacts:
+  files:
+    - dist/**/*
+    - appspec.yml
+    - scripts/**/*
+  discard-paths: no
+
+cache:
+  paths:
+    - node_modules/**/*

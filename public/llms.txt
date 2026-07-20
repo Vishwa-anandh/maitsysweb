@@ -1,0 +1,51 @@
+# Maitsys
+
+> Maitsys is a global IT consulting and digital transformation company headquartered in Boston, USA, with offices across India, the UK, Poland, Argentina, Malaysia, Singapore, the Philippines and Brazil. It delivers SAP services (ECC to S/4HANA migration, BTP, Basis, security & GRC), cloud managed services (AWS, Azure), Microsoft Power Platform solutions, cybersecurity services, and enterprise software products.
+
+Maitsys serves industries including technology, healthcare, manufacturing, financial services, government, transportation, energy, and consumer products. Contact: https://www.maitsys.com/contact-us
+
+## Services
+
+- [SAP Services](https://www.maitsys.com/sap-services): SAP implementation, operations, and managed services
+- [SAP Migration Services](https://www.maitsys.com/sap-migration-services): SAP ECC to S/4HANA migration and conversion
+- [SAP BTP Services](https://www.maitsys.com/sap-btp-services): SAP Business Technology Platform consulting
+- [SAP Security & GRC Services](https://www.maitsys.com/sap-security-grc-services): SAP security, governance, risk and compliance
+- [Cyber Security Services](https://www.maitsys.com/cyber-security-services): Enterprise cybersecurity services
+- [AWS Managed Services](https://www.maitsys.com/aws-managed-services): AWS cloud operations and cost optimization
+- [Azure Managed Services](https://www.maitsys.com/azure-managed-services): Azure cloud operations and cost optimization
+- [Microsoft Power Platform](https://www.maitsys.com/microsoft-power-platform): Power Platform consulting and delivery
+- [Power Apps](https://www.maitsys.com/power-apps): Custom low-code application development
+- [Power Automate](https://www.maitsys.com/power-automate): Workflow and process automation
+- [Power BI](https://www.maitsys.com/power-bi): Business intelligence and analytics
+- [M365 Automation](https://www.maitsys.com/m365-automation): Microsoft 365 automation services
+
+## Products
+
+- [SAP IDoc Monitoring](https://www.maitsys.com/products/sap-idoc-monitoring): AI-powered SAP IDoc monitoring tool
+- [MIO User Monitoring](https://www.maitsys.com/products/mio-user-monitoring): SAP user activity monitoring
+- [Firefighter](https://www.maitsys.com/products/firefighter): SAP emergency access management (EAM)
+- [Cloud Cost Optimizer](https://www.maitsys.com/products/cloud-cost-optimizer): Cloud cost optimization platform
+
+## Blog
+
+- [SAP ECC 2027 Deadline by EHP Version](https://www.maitsys.com/blog/sap-ecc-2027-deadline-by-ehp-version): When SAP ECC support really ends, by enhancement package
+- [SAP ECC to S/4HANA Cloud Migration Roadmap](https://www.maitsys.com/blog/sap-ecc-to-s4hana-cloud-migration-roadmap): Migration strategies and roadmap
+- [SAP S/4HANA System Conversion Guide](https://www.maitsys.com/blog/sap-s4hana-conversion-system-conversion-guide): Brownfield system conversion guide
+- [SAP S/4HANA Migration](https://www.maitsys.com/blog/sap-s4hana-migration): Migration approaches, phases, and FAQs
+- [SAP S/4HANA Cloud Public Edition Implementation Guide](https://www.maitsys.com/blog/sap-s4hana-cloud-public-edition-implementation-guide): Public cloud ERP implementation
+- [SAP Upgrade Factory Approach](https://www.maitsys.com/blog/sap-upgrade-factory-approach-ecc-ehp-s4hana): Factory-model SAP upgrades
+- [SAP Basis Automation in the Cloud](https://www.maitsys.com/blog/sap-basis-automation-cloud): Automating SAP Basis operations
+- [SAP Security Best Practices 2026](https://www.maitsys.com/blog/sap-security-best-practices-2026-guide): SAP security and compliance guide
+- [SAP Disaster Recovery on AWS & Azure](https://www.maitsys.com/blog/sap-disaster-recovery-aws-azure-best-practices): DR patterns and best practices
+- [AI-Powered SAP IDoc Monitoring](https://www.maitsys.com/blog/ai-powered-sap-idoc-monitoring): The future of SAP integration monitoring
+- [SAP BTP Cost Optimization Strategies](https://www.maitsys.com/blog/sap-btp-cost-optimization-strategies): Controlling BTP spend
+- [Azure Cost Optimization & FinOps](https://www.maitsys.com/blog/azure-cost-optimization-finops-cloud-cost-management): Azure cloud cost management
+- [AWS & Azure Cloud Cost Optimization](https://www.maitsys.com/blog/cloud-cost-optimization-aws-azure): Cross-cloud cost optimization
+
+## Company
+
+- [About Us](https://www.maitsys.com/about-us): Company overview, leadership, and locations
+- [Products](https://www.maitsys.com/products): Product portfolio
+- [Blog](https://www.maitsys.com/blog): All articles
+- [Careers](https://www.maitsys.com/careers): Open positions
+- [Contact](https://www.maitsys.com/contact-us): Get in touch
