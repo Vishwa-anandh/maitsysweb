@@ -12,11 +12,11 @@ phases:
       - echo "Installing dependencies..."
 
       # Install Google Chrome so the custom Puppeteer prerenderer has a browser
-      # (Amazon Linux 2023 compatible). puppeteer-core ships no bundled Chromium.
+      # (Amazon Linux 2023). Installing the RPM directly via dnf lets it resolve
+      # and pull all shared-library deps (nss, atk, gbm, etc.) in one step.
       - echo "Installing Google Chrome..."
-      - dnf install -y wget
-      - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-      - dnf install -y ./google-chrome-stable_current_x86_64.rpm
+      - dnf install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+      - echo "Chrome installed:" && (google-chrome-stable --version || google-chrome --version)
 
       # Install node dependencies
       - npm install
