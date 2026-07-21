@@ -7,15 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:test": "tsc -b && vite build --mode test",
-    "postbuild": "node -e \"if(process.env.VERCEL){console.log('Skipping react-snap on Vercel')}else{try{require('child_process').execSync('npx react-snap',{stdio:'inherit'})}catch(e){process.exit(1)}}\"",
+    "postbuild": "node scripts/prerender.mjs",
+    "prerender": "node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "analyze": "npx vite-bundle-visualizer",
     "sonar": "sonar-scanner"
   },
-  "reactSnap": {
-    "source": "dist",
-    "destination": "dist",
+  "prerender": {
     "exclude": [
       "/podcast",
       "/podcast/"
@@ -39,9 +38,6 @@
       "/blog/sap-ecc-2027-deadline-by-ehp-version",
       "/blog/sap-disaster-recovery-aws-azure-best-practices",
       "/blog/cloud-cost-optimization-aws-azure",
-      "/blog/sap-emergency-access-compliance-report",
-      "/blog/sap-migration-access-report",
-      "/blog/path-to-ai-implementation",
       "/products",
       "/products/sap-idoc-monitoring",
       "/products/mio-user-monitoring",
@@ -65,18 +61,11 @@
       "/products/sap-idoc-monitoring/TermsAndConditions",
       "/products/firefighter/privacy-policy",
       "/products/firefighter/terms-and-conditions"
-    ],
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ],
-    "skipThirdPartyRequests": true,
-    "concurrency": 1,
-    "async": false,
-    "crawl": false
+    ]
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@sparticuz/chromium": "^149.0.0",
     "@types/node": "^24.6.2",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
@@ -86,6 +75,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.22",
     "postcss": "^8.5.6",
+    "puppeteer-core": "^25.3.0",
     "tailwindcss": "^3.4.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
@@ -102,7 +92,6 @@
     "react-dom": "^19.1.1",
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.9.3",
-    "react-snap": "^1.13.1",
     "sonar-scanner": "^3.1.0"
   }
 }

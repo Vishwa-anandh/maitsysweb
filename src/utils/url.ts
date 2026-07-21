@@ -1,6 +1,6 @@
 export const getSiteOrigin = () => {
   const envUrl = import.meta.env.VITE_SITE_URL;
-  const fallback = "https://www.maitsys.com";
+  const fallback = "https://test.maitsys.com";
 
   // If we have an environment variable, use it as the primary source of truth
   if (envUrl && !envUrl.includes("localhost")) {

@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       createHtmlPlugin({
         inject: {
           data: {
-            VITE_SITE_URL: env.VITE_SITE_URL || "https://www.maitsys.com",
+            VITE_SITE_URL: env.VITE_SITE_URL || "https://test.maitsys.com",
           },
         },
       }),

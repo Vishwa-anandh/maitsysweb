@@ -11,11 +11,12 @@ phases:
     commands:
       - echo "Installing dependencies..."
 
-      # Install Google Chrome for react-snap (Amazon Linux 2023 compatible)
+      # Install Google Chrome so the custom Puppeteer prerenderer has a browser
+      # (Amazon Linux 2023 compatible). puppeteer-core ships no bundled Chromium.
       - echo "Installing Google Chrome..."
       - dnf install -y wget
-      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-      - dnf install -y ./google-chrome-stable_current_x86_64.rpm || true
+      - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+      - dnf install -y ./google-chrome-stable_current_x86_64.rpm
 
       # Install node dependencies
       - npm install
@@ -33,19 +34,20 @@ phases:
       # Build Vite project
       - npx vite build
 
-      # Prerender all routes with react-snap using the system Chrome.
+      # Prerender every route with the custom Puppeteer script using system Chrome.
       # REQUIRED for SEO/AI crawlers - without this the deploy is an empty SPA shell.
       - export PUPPETEER_EXECUTABLE_PATH=$(command -v google-chrome-stable || command -v google-chrome)
       - test -n "$PUPPETEER_EXECUTABLE_PATH" || { echo "ERROR - Chrome not found, prerender cannot run"; exit 1; }
-      - echo "Running react-snap prerender with $PUPPETEER_EXECUTABLE_PATH"
-      - node scripts/prerender.cjs
+      - echo "Prerendering with $PUPPETEER_EXECUTABLE_PATH"
+      - node scripts/prerender.mjs
 
       # Guard: fail the build if prerendered content is missing (prevents silent SPA-only deploys)
       - test -f dist/blog/sap-s4hana-migration/index.html
       - grep -q "application/ld+json" dist/blog/sap-s4hana-migration/index.html
-      - echo "Prerender verified - static HTML with structured data present"
+      - grep -q "Key Takeaways" dist/blog/sap-s4hana-migration/index.html
+      - echo "Prerender verified - static HTML with content and structured data present"
 
-      # Debug: list generated pages
+      # Debug: list generated top-level pages
       - echo "Generated files:"
       - ls dist
 
