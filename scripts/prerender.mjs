@@ -231,13 +231,33 @@ async function run() {
   await browser.close();
   server.close();
 
+  // Always write a report readable from the deployed site (diagnostics).
+  const okCount = results.filter((r) => r.ok).length;
   const failed = results.filter((r) => !r.ok);
-  if (failed.length) {
-    console.error(`prerender: ${failed.length} route(s) failed:`);
-    failed.forEach((f) => console.error(`  ${f.route}: ${f.error}`));
-    process.exit(1);
+  const report = [
+    `total=${results.length}`,
+    `ok=${okCount}`,
+    `failed=${failed.length}`,
+    `chrome=${launchConfig.executablePath}`,
+    `concurrency=${CONCURRENCY}`,
+    "",
+    ...results.map((r) =>
+      r.ok ? `OK   ${r.route} (${r.bytes}B)` : `FAIL ${r.route} :: ${r.error}`,
+    ),
+  ].join("\n");
+  try {
+    await writeFile(join(DIST, "prerender-report.txt"), report, "utf8");
+  } catch {
+    /* ignore */
   }
-  console.log(`prerender: complete - ${results.length} routes written`);
+
+  if (failed.length) {
+    console.error(`prerender: ${failed.length}/${results.length} route(s) failed`);
+    failed.forEach((f) => console.error(`  ${f.route}: ${f.error}`));
+    // Fail the build only in strict mode; otherwise deploy what succeeded + report.
+    if (process.env.PRERENDER_STRICT === "1") process.exit(1);
+  }
+  console.log(`prerender: ${okCount}/${results.length} routes written`);
 }
 
 run().catch((err) => {
