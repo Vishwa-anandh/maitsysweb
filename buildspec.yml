@@ -15,8 +15,8 @@ phases:
       # (Amazon Linux 2023). Installing the RPM directly via dnf lets it resolve
       # and pull all shared-library deps (nss, atk, gbm, etc.) in one step.
       - echo "Installing Google Chrome..."
-      - dnf install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-      - echo "Chrome installed:" && (google-chrome-stable --version || google-chrome --version)
+      - dnf install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm || echo "WARN Chrome install failed"
+      - (google-chrome-stable --version || google-chrome --version || echo "no chrome on PATH")
 
       # Install node dependencies
       - npm install
@@ -36,13 +36,12 @@ phases:
 
       # Prerender every route with the custom Puppeteer script using system Chrome.
       # REQUIRED for SEO/AI crawlers - without this the deploy is an empty SPA shell.
-      - export PUPPETEER_EXECUTABLE_PATH=$(command -v google-chrome-stable || command -v google-chrome)
-      - test -n "$PUPPETEER_EXECUTABLE_PATH" || { echo "ERROR - Chrome not found, prerender cannot run"; exit 1; }
-      - echo "Prerendering with $PUPPETEER_EXECUTABLE_PATH"
-      # Diagnostic mode: one page at a time (low memory), non-strict so the build
-      # deploys the report even if some routes fail. Revert once green.
+      - export PUPPETEER_EXECUTABLE_PATH=$(command -v google-chrome-stable || command -v google-chrome || true)
+      - echo "Prerendering with chrome=${PUPPETEER_EXECUTABLE_PATH:-<none>}"
+      # Diagnostic mode: one page at a time (low memory), fully non-fatal so the
+      # build always deploys build-info.txt + prerender-report.txt. Revert once green.
       - export PRERENDER_CONCURRENCY=1
-      - node scripts/prerender.mjs
+      - node scripts/prerender.mjs || echo "WARN prerender exited non-zero"
       - echo "=== prerender-report.txt ===" && cat dist/prerender-report.txt || true
 
       # Self-diagnostic: write a report readable from the deployed site so we can

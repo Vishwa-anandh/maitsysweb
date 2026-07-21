@@ -192,24 +192,49 @@ async function prerenderRoute(browser, route) {
 }
 
 async function run() {
+  const strict = process.env.PRERENDER_STRICT === "1";
+  const writeReport = async (lines) => {
+    try {
+      await writeFile(join(DIST, "prerender-report.txt"), lines.join("\n"), "utf8");
+    } catch {
+      /* ignore */
+    }
+  };
+
   const launchConfig = resolveLaunchConfig();
   if (!launchConfig) {
-    console.error(
-      "ERROR - Chrome not found. Set PUPPETEER_EXECUTABLE_PATH to a Chrome/Chromium binary.",
-    );
-    process.exit(1);
+    console.error("prerender: Chrome not found");
+    await writeReport(["status=NO_CHROME", "chrome=not found", "ok=0"]);
+    if (strict) process.exit(1);
+    return;
   }
   console.log(`prerender: ${routes.length} routes, concurrency ${CONCURRENCY}`);
 
   const shellPath = join(DIST, "index.html");
   if (!existsSync(shellPath)) {
-    console.error(`ERROR - ${shellPath} not found. Run "vite build" first.`);
-    process.exit(1);
+    console.error(`prerender: ${shellPath} not found. Run "vite build" first.`);
+    await writeReport(["status=NO_SHELL", `path=${shellPath}`, "ok=0"]);
+    if (strict) process.exit(1);
+    return;
   }
   const shell = await readFile(shellPath, "utf8");
   const server = await startServer(shell);
 
-  const browser = await puppeteer.launch(launchConfig);
+  let browser;
+  try {
+    browser = await puppeteer.launch(launchConfig);
+  } catch (e) {
+    console.error("prerender: browser launch failed:", e.message);
+    await writeReport([
+      "status=LAUNCH_FAILED",
+      `chrome=${launchConfig.executablePath}`,
+      `error=${e.message}`,
+      "ok=0",
+    ]);
+    server.close();
+    if (strict) process.exit(1);
+    return;
+  }
 
   const results = [];
   const queue = [...routes];
@@ -260,8 +285,16 @@ async function run() {
   console.log(`prerender: ${okCount}/${results.length} routes written`);
 }
 
-run().catch((err) => {
-  console.error("prerender: fatal error");
-  console.error(err);
-  process.exit(1);
+run().catch(async (err) => {
+  console.error("prerender: fatal error", err);
+  try {
+    await writeFile(
+      join(DIST, "prerender-report.txt"),
+      `status=FATAL\nerror=${err && err.message}\n`,
+      "utf8",
+    );
+  } catch {
+    /* ignore */
+  }
+  if (process.env.PRERENDER_STRICT === "1") process.exit(1);
 });
