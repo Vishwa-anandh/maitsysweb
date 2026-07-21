@@ -41,6 +41,15 @@ phases:
       - echo "Prerendering with $PUPPETEER_EXECUTABLE_PATH"
       - node scripts/prerender.mjs
 
+      # Self-diagnostic: write a report readable from the deployed site so we can
+      # confirm the commit and how many pages were actually prerendered.
+      - 'echo "commit=${CODEBUILD_RESOLVED_SOURCE_VERSION:-unknown}" > dist/build-info.txt'
+      - 'echo "built=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> dist/build-info.txt'
+      - 'echo "prerendered_index_html=$(find dist -name index.html | wc -l)" >> dist/build-info.txt'
+      - 'echo "sample_routes:" >> dist/build-info.txt'
+      - 'find dist -name index.html | head -20 >> dist/build-info.txt'
+      - cat dist/build-info.txt
+
       # Guard: fail the build if prerendered content is missing (prevents silent SPA-only deploys)
       - test -f dist/blog/sap-s4hana-migration/index.html
       - grep -q "application/ld+json" dist/blog/sap-s4hana-migration/index.html
