@@ -27,9 +27,7 @@ const pkg = require("../package.json");
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, "..", "dist");
 const PORT = 45678;
-// Fewer parallel tabs on Vercel's smaller build containers; override with PRERENDER_CONCURRENCY.
-const CONCURRENCY =
-  Number(process.env.PRERENDER_CONCURRENCY) || (process.env.VERCEL ? 2 : 4);
+const CONCURRENCY = Number(process.env.PRERENDER_CONCURRENCY) || 4;
 const NAV_TIMEOUT = 60000;
 
 const normalize = (r) => {
@@ -90,42 +88,22 @@ function findSystemChrome() {
 }
 
 /**
- * Resolve a Puppeteer launch config.
- * - AWS/local: system Chrome (via PUPPETEER_EXECUTABLE_PATH or common paths)
- * - Vercel/serverless (no system Chrome): fall back to @sparticuz/chromium
+ * Resolve a Puppeteer launch config using the system Chrome
+ * (PUPPETEER_EXECUTABLE_PATH in CI, or a common install path locally).
  */
-async function resolveLaunchConfig() {
+function resolveLaunchConfig() {
   const systemChrome = findSystemChrome();
-  if (systemChrome) {
-    console.log(`prerender: using system Chrome at ${systemChrome}`);
-    return {
-      executablePath: systemChrome,
-      headless: "new",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-      ],
-    };
-  }
-  try {
-    const mod = await import("@sparticuz/chromium");
-    const chromium = mod.default || mod;
-    const executablePath = await chromium.executablePath();
-    console.log(`prerender: using @sparticuz/chromium at ${executablePath}`);
-    return {
-      executablePath,
-      headless: chromium.headless ?? "new",
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-    };
-  } catch (err) {
-    console.error(
-      "ERROR - no Chrome found and @sparticuz/chromium unavailable:",
-      err.message,
-    );
-    return null;
-  }
+  if (!systemChrome) return null;
+  console.log(`prerender: using system Chrome at ${systemChrome}`);
+  return {
+    executablePath: systemChrome,
+    headless: "new",
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+    ],
+  };
 }
 
 function startServer(shell) {
@@ -214,10 +192,10 @@ async function prerenderRoute(browser, route) {
 }
 
 async function run() {
-  const launchConfig = await resolveLaunchConfig();
+  const launchConfig = resolveLaunchConfig();
   if (!launchConfig) {
     console.error(
-      "ERROR - Chrome not found. Set PUPPETEER_EXECUTABLE_PATH or install @sparticuz/chromium.",
+      "ERROR - Chrome not found. Set PUPPETEER_EXECUTABLE_PATH to a Chrome/Chromium binary.",
     );
     process.exit(1);
   }
